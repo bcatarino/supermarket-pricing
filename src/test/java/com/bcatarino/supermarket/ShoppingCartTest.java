@@ -22,13 +22,13 @@ public class ShoppingCartTest {
     private ShoppingCart cart = new ShoppingCart();
 
     @Test
-    public void emptyOrder() {
+    public void emptyOrderShouldReturnZeroTotal() {
         Receipt receipt = cart.checkout(new Order(new ArrayList<>()));
         assertEquals(new Receipt(new ArrayList<>(), BigDecimal.ZERO), receipt);
     }
 
     @Test
-    public void orderWithOneItemPerQuantity() {
+    public void orderWithOneItemPerQuantityShouldReturnUnitPrice() {
 
         List<OrderItem> orderItems = Collections.singletonList(oneCanOfBeans());
         Receipt receipt = cart.checkout(new Order(orderItems));
@@ -38,7 +38,7 @@ public class ShoppingCartTest {
     }
 
     @Test
-    public void orderWithTwoDifferentItemsPerQuantity() {
+    public void orderWithTwoDifferentItemsPerQuantityShouldSumValues() {
 
         List<OrderItem> orderItems = Arrays.asList(oneCanOfBeans(), oneCanOfCoke());
         Receipt receipt = cart.checkout(new Order(orderItems));
@@ -48,7 +48,7 @@ public class ShoppingCartTest {
     }
 
     @Test
-    public void orderWithThreeOfSameItems() {
+    public void orderWithThreeOfSameItemsShouldMultiplyValues() {
 
         Product beansRef = beans();
         BigDecimal expectedQuantity = BigDecimal.valueOf(3d);
