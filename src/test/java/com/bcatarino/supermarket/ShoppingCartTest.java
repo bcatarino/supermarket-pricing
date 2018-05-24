@@ -6,7 +6,6 @@ import com.bcatarino.supermarket.model.Receipt;
 import org.junit.Test;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -27,7 +26,7 @@ public class ShoppingCartTest {
         Receipt receipt = cart.checkout(new Order(orderItems));
 
         assertEquals(orderItems, receipt.getItems());
-        assertEquals(beans().getPricePerUnit().setScale(2, BigDecimal.ROUND_HALF_UP), receipt.getTotal());
+        assertEquals(beans().getPricePerUnit().setScale(2, BigDecimal.ROUND_HALF_UP), receipt.getSubtotal());
     }
 
     @Test
@@ -37,7 +36,7 @@ public class ShoppingCartTest {
         Receipt receipt = cart.checkout(new Order(orderItems));
 
         assertEquals(orderItems, receipt.getItems());
-        assertEquals(bigDecimalScaleTwo(1.2d), receipt.getTotal());
+        assertEquals(bigDecimalScaleTwo(1.2d), receipt.getSubtotal());
     }
 
     @Test
@@ -48,7 +47,7 @@ public class ShoppingCartTest {
         Receipt receipt = cart.checkout(new Order(orderItems));
 
         assertEquals(orderItems, receipt.getItems());
-        assertEquals(bigDecimalScaleTwo(1.5d), receipt.getTotal());
+        assertEquals(bigDecimalScaleTwo(1.5d), receipt.getSubtotal());
     }
 
     @Test
@@ -58,7 +57,7 @@ public class ShoppingCartTest {
         Receipt receipt = cart.checkout(new Order(orderItems));
 
         assertEquals(orderItems, receipt.getItems());
-        assertEquals(bigDecimalScaleTwo(3.6d), receipt.getTotal());
+        assertEquals(bigDecimalScaleTwo(3.6d), receipt.getSubtotal());
     }
 
     @Test
@@ -69,7 +68,7 @@ public class ShoppingCartTest {
         Receipt receipt = cart.checkout(new Order(orderItems));
 
         assertEquals(orderItems, receipt.getItems());
-        assertEquals(orangesItem.getProduct().getPricePerUnit(), receipt.getTotal());
+        assertEquals(orangesItem.getProduct().getPricePerUnit(), receipt.getSubtotal());
     }
 
     @Test
@@ -80,7 +79,7 @@ public class ShoppingCartTest {
         Receipt receipt = cart.checkout(new Order(orderItems));
 
         assertEquals(orderItems, receipt.getItems());
-        assertEquals(bigDecimalScaleTwo(0.4d), receipt.getTotal());
+        assertEquals(bigDecimalScaleTwo(0.4d), receipt.getSubtotal());
     }
 
     @Test
@@ -91,7 +90,7 @@ public class ShoppingCartTest {
         Receipt receipt = cart.checkout(new Order(orderItems));
 
         assertEquals(orderItems, receipt.getItems());
-        assertEquals(bigDecimalScaleTwo(5.97d), receipt.getTotal());
+        assertEquals(bigDecimalScaleTwo(5.97d), receipt.getSubtotal());
     }
 
 

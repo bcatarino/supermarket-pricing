@@ -31,6 +31,6 @@ public class ReceiptTest {
         List<OrderItem> orderItems = Collections.singletonList(OrderItems.oneKgOfOranges());
         Receipt receipt = new Receipt(orderItems, BigDecimal.ONE);
         assertEquals(orderItems, receipt.getItems());
-        assertEquals(BigDecimal.ONE, receipt.getTotal());
+        assertEquals(BigDecimal.ONE, receipt.getSubtotal());
     }
 }

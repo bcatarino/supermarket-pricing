@@ -12,19 +12,19 @@ public class Receipt {
 
     private List<OrderItem> items;
 
-    private BigDecimal total;
+    private BigDecimal subtotal;
 
-    public Receipt(List<OrderItem> items, BigDecimal total) {
+    public Receipt(List<OrderItem> items, BigDecimal subtotal) {
 
         if (items == null || items.isEmpty()) {
             throw new IllegalArgumentException("The list of order items cannot be null");
         }
 
-        if (total == null) {
-            throw new IllegalArgumentException("The total cannot be null");
+        if (subtotal == null) {
+            throw new IllegalArgumentException("The subtotal cannot be null");
         }
 
         this.items = items;
-        this.total = total;
+        this.subtotal = subtotal;
     }
 }
