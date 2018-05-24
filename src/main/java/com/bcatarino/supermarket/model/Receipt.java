@@ -4,14 +4,15 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.List;
 
-@Getter
 @EqualsAndHashCode
 public class Receipt {
 
     private List<OrderItem> items;
 
+    @Getter
     private BigDecimal subtotal;
 
     public Receipt(List<OrderItem> items, BigDecimal subtotal) {
@@ -26,5 +27,9 @@ public class Receipt {
 
         this.items = items;
         this.subtotal = subtotal;
+    }
+
+    public List<OrderItem> getItems() {
+        return Collections.unmodifiableList(items);
     }
 }

@@ -1,10 +1,12 @@
 package com.bcatarino.supermarket.model;
 
+import com.bcatarino.supermarket.DiscountType;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 public class ProductTest {
 
@@ -49,5 +51,15 @@ public class ProductTest {
         assertEquals("beans", beans.getName());
         assertEquals(BigDecimal.ONE, beans.getPricePerUnit());
         assertEquals(Unit.QUANTITY, beans.getUnit());
+        assertEquals(Optional.empty(), beans.getDiscount());
+    }
+
+    @Test
+    public void shouldCreateValidProductWithDiscount() {
+        Product beans = new Product("beans", BigDecimal.ONE, Unit.QUANTITY, Optional.of(DiscountType.THREE_FOR_TWO));
+        assertEquals("beans", beans.getName());
+        assertEquals(BigDecimal.ONE, beans.getPricePerUnit());
+        assertEquals(Unit.QUANTITY, beans.getUnit());
+        assertEquals(Optional.of(DiscountType.THREE_FOR_TWO), beans.getDiscount());
     }
 }

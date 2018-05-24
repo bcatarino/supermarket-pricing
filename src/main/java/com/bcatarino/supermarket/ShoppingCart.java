@@ -12,9 +12,9 @@ public class ShoppingCart {
 
     public Receipt checkout(Order order) {
 
-        BigDecimal total = order.getItems().stream().map(this::getTotalForOrderItem).reduce(BigDecimal.ZERO, BigDecimal::add);
+        BigDecimal subtotal = order.getItems().stream().map(this::getTotalForOrderItem).reduce(BigDecimal.ZERO, BigDecimal::add);
 
-        return new Receipt(order.getItems(), total);
+        return new Receipt(order.getItems(), subtotal);
     }
 
     private BigDecimal getTotalForOrderItem(OrderItem item) {

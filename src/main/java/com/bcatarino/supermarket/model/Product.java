@@ -1,13 +1,16 @@
 package com.bcatarino.supermarket.model;
 
+import com.bcatarino.supermarket.DiscountType;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 @Getter
 @EqualsAndHashCode(of = "name")
+@SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 public class Product {
 
     private String name;
@@ -16,7 +19,13 @@ public class Product {
 
     private Unit unit;
 
+    private Optional<DiscountType> discount;
+
     public Product(String name, BigDecimal pricePerUnit, Unit unit) {
+        this(name, pricePerUnit, unit, Optional.empty());
+    }
+
+    public Product(String name, BigDecimal pricePerUnit, Unit unit, Optional<DiscountType> discount) {
 
         if (StringUtils.isEmpty(name)) {
             throw new IllegalArgumentException("Name is mandatory");
@@ -33,5 +42,6 @@ public class Product {
         this.name = name;
         this.pricePerUnit = pricePerUnit;
         this.unit = unit;
+        this.discount = discount;
     }
 }
