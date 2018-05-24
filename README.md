@@ -30,3 +30,7 @@ Total savings       -0.90
 Total to Pay         2.40
 
 ```
+
+## Assumptions
+
+* Minimum price for one item is 0.01.

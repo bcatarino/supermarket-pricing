@@ -1,9 +1,7 @@
 package com.bcatarino.supermarket.model;
 
-import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NonNull;
 import org.apache.commons.lang3.StringUtils;
 
 import java.math.BigDecimal;
