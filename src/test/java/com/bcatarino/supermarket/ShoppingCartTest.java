@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -20,19 +21,29 @@ public class ShoppingCartTest {
     private ShoppingCart cart = new ShoppingCart();
 
     @Test
-    public void emptyOrderShouldReturnReceiptWithZero() {
-        Receipt receipt = cart.checkout(new Order(new ArrayList<OrderItem>()));
-        assertEquals(new Receipt(new ArrayList<OrderItem>(), BigDecimal.ZERO), receipt);
+    public void emptyOrder() {
+        Receipt receipt = cart.checkout(new Order(new ArrayList<>()));
+        assertEquals(new Receipt(new ArrayList<>(), BigDecimal.ZERO), receipt);
     }
 
     @Test
-    public void orderWithItemPerQuantityShouldReturnThatAsTotal() {
+    public void orderWithOneItemPerQuantity() {
 
         List<OrderItem> orderItems = Collections.singletonList(oneCanOfBeans());
         Receipt receipt = cart.checkout(new Order(orderItems));
 
         assertEquals(orderItems, receipt.getItems());
         assertEquals(beans().getPricePerUnit(), receipt.getTotal());
+    }
+
+    @Test
+    public void orderWithTwoDifferentItemsPerQuantity() {
+
+        List<OrderItem> orderItems = Arrays.asList(oneCanOfBeans(), oneCanOfCoke());
+        Receipt receipt = cart.checkout(new Order(orderItems));
+
+        assertEquals(orderItems, receipt.getItems());
+        assertEquals(beans().getPricePerUnit().add(coke().getPricePerUnit()), receipt.getTotal());
     }
 
 }

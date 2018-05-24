@@ -14,4 +14,8 @@ public final class OrderItems {
     public static OrderItem oneCanOfBeans() {
         return new OrderItem(beans(), BigDecimal.ONE);
     }
+
+    public static OrderItem oneCanOfCoke() {
+        return new OrderItem(coke(), BigDecimal.ONE);
+    }
 }
