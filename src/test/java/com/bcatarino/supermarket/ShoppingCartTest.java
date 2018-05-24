@@ -21,12 +21,6 @@ public class ShoppingCartTest {
     private ShoppingCart cart = new ShoppingCart();
 
     @Test
-    public void shouldReturnZeroIfEmptyOrder() {
-        Receipt receipt = cart.checkout(new Order(new ArrayList<>()));
-        assertEquals(new Receipt(new ArrayList<>(), BigDecimal.ZERO), receipt);
-    }
-
-    @Test
     public void shouldReturnUnitPriceIfSingleItem() {
 
         List<OrderItem> orderItems = Collections.singletonList(oneCanOfBeans());
