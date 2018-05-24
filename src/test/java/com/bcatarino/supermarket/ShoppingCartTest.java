@@ -2,7 +2,6 @@ package com.bcatarino.supermarket;
 
 import com.bcatarino.supermarket.model.Order;
 import com.bcatarino.supermarket.model.OrderItem;
-import com.bcatarino.supermarket.model.Product;
 import com.bcatarino.supermarket.model.Receipt;
 import org.junit.Test;
 
@@ -12,26 +11,23 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.Assert.*;
-
+import static org.junit.Assert.assertEquals;
 import static testobjects.OrderItems.*;
-import static testobjects.OrderItems.threeCansOfBeans;
-import static testobjects.Products.*;
-
-import static testutils.MathUtils.*;
+import static testobjects.Products.beans;
+import static testutils.MathUtils.bigDecimalScaleTwo;
 
 public class ShoppingCartTest {
 
     private ShoppingCart cart = new ShoppingCart();
 
     @Test
-    public void emptyOrderShouldReturnZeroTotal() {
+    public void shouldReturnZeroIfEmptyOrder() {
         Receipt receipt = cart.checkout(new Order(new ArrayList<>()));
         assertEquals(new Receipt(new ArrayList<>(), BigDecimal.ZERO), receipt);
     }
 
     @Test
-    public void orderWithOneItemPerQuantityShouldReturnUnitPrice() {
+    public void shouldReturnUnitPriceIfSingleItem() {
 
         List<OrderItem> orderItems = Collections.singletonList(oneCanOfBeans());
         Receipt receipt = cart.checkout(new Order(orderItems));
@@ -41,7 +37,7 @@ public class ShoppingCartTest {
     }
 
     @Test
-    public void orderWithTwoDifferentItemsPerQuantityShouldSumValues() {
+    public void shouldReturnSumOfValuesIfTwoDifferentItems() {
 
         List<OrderItem> orderItems = Arrays.asList(oneCanOfBeans(), oneCanOfCoke());
         Receipt receipt = cart.checkout(new Order(orderItems));
@@ -51,7 +47,7 @@ public class ShoppingCartTest {
     }
 
     @Test
-    public void orderWithThreeOfSameItemsShouldMultiplyValues() {
+    public void shouldMultiplyPerQuantityIfThreeOfSameItem() {
 
         OrderItem beansItem = threeCansOfBeans();
         List<OrderItem> orderItems = Collections.singletonList(beansItem);
@@ -62,7 +58,7 @@ public class ShoppingCartTest {
     }
 
     @Test
-    public void orderWithMultipleQuantitiesOfItemShouldReturnTotal() {
+    public void shouldReturnTotalIfMultipleQuantitiesOfItems() {
 
         List<OrderItem> orderItems = Arrays.asList(threeCansOfBeans(), threeCansOfCoke());
         Receipt receipt = cart.checkout(new Order(orderItems));
@@ -72,7 +68,7 @@ public class ShoppingCartTest {
     }
 
     @Test
-    public void orderWithOneKgReturnsPricePerKg() {
+    public void shouldReturnPricePerKgIfOneKg() {
 
         OrderItem orangesItem = oneKgOfOranges();
         List<OrderItem> orderItems = Collections.singletonList(orangesItem);
@@ -83,7 +79,18 @@ public class ShoppingCartTest {
     }
 
     @Test
-    public void orderWithThreeKgsReturnsThreeTimesKfPrice() {
+    public void shouldReturnOneFifthOfKgPriceIfTwoHundredGramsOfProduct() {
+
+        OrderItem orangesItem = twoHundredGramsOfOranges();
+        List<OrderItem> orderItems = Collections.singletonList(orangesItem);
+        Receipt receipt = cart.checkout(new Order(orderItems));
+
+        assertEquals(orderItems, receipt.getItems());
+        assertEquals(bigDecimalScaleTwo(0.4d), receipt.getTotal());
+    }
+
+    @Test
+    public void shouldReturnThreeTimeKgPriceIfThreeKgs() {
 
         OrderItem orangesItem = threeKgsOfOranges();
         List<OrderItem> orderItems = Collections.singletonList(orangesItem);
