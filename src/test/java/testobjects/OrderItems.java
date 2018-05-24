@@ -15,7 +15,15 @@ public final class OrderItems {
         return new OrderItem(beans(), BigDecimal.ONE);
     }
 
+    public static OrderItem threeCansOfBeans() {
+        return new OrderItem(beans(), BigDecimal.valueOf(3d));
+    }
+
     public static OrderItem oneCanOfCoke() {
         return new OrderItem(coke(), BigDecimal.ONE);
+    }
+
+    public static OrderItem threeCansOfCoke() {
+        return new OrderItem(coke(), BigDecimal.valueOf(3d));
     }
 }

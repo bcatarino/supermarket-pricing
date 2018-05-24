@@ -15,6 +15,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 import static testobjects.OrderItems.*;
+import static testobjects.OrderItems.threeCansOfBeans;
 import static testobjects.Products.*;
 
 public class ShoppingCartTest {
@@ -50,13 +51,22 @@ public class ShoppingCartTest {
     @Test
     public void orderWithThreeOfSameItemsShouldMultiplyValues() {
 
-        Product beansRef = beans();
-        BigDecimal expectedQuantity = BigDecimal.valueOf(3d);
-        List<OrderItem> orderItems = Collections.singletonList(new OrderItem(beansRef, expectedQuantity));
+        OrderItem beansItem = threeCansOfBeans();
+        List<OrderItem> orderItems = Collections.singletonList(beansItem);
         Receipt receipt = cart.checkout(new Order(orderItems));
 
         assertEquals(orderItems, receipt.getItems());
-        assertEquals(beansRef.getPricePerUnit().multiply(expectedQuantity), receipt.getTotal());
+        assertEquals(BigDecimal.valueOf(1.5d).setScale(2, BigDecimal.ROUND_HALF_UP), receipt.getTotal());
+    }
+
+    @Test
+    public void orderWithMultipleQuantitiesOfItemShouldReturnTotal() {
+
+        List<OrderItem> orderItems = Arrays.asList(threeCansOfBeans(), threeCansOfCoke());
+        Receipt receipt = cart.checkout(new Order(orderItems));
+
+        assertEquals(orderItems, receipt.getItems());
+        assertEquals(BigDecimal.valueOf(3.6d).setScale(2, BigDecimal.ROUND_HALF_UP), receipt.getTotal());
     }
 
 }
