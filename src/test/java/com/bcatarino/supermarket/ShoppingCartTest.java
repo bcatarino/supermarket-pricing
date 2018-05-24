@@ -18,6 +18,8 @@ import static testobjects.OrderItems.*;
 import static testobjects.OrderItems.threeCansOfBeans;
 import static testobjects.Products.*;
 
+import static testutils.MathUtils.*;
+
 public class ShoppingCartTest {
 
     private ShoppingCart cart = new ShoppingCart();
@@ -35,7 +37,7 @@ public class ShoppingCartTest {
         Receipt receipt = cart.checkout(new Order(orderItems));
 
         assertEquals(orderItems, receipt.getItems());
-        assertEquals(beans().getPricePerUnit(), receipt.getTotal());
+        assertEquals(beans().getPricePerUnit().setScale(2, BigDecimal.ROUND_HALF_UP), receipt.getTotal());
     }
 
     @Test
@@ -45,7 +47,7 @@ public class ShoppingCartTest {
         Receipt receipt = cart.checkout(new Order(orderItems));
 
         assertEquals(orderItems, receipt.getItems());
-        assertEquals(beans().getPricePerUnit().add(coke().getPricePerUnit()), receipt.getTotal());
+        assertEquals(bigDecimalScaleTwo(1.2d), receipt.getTotal());
     }
 
     @Test
@@ -56,7 +58,7 @@ public class ShoppingCartTest {
         Receipt receipt = cart.checkout(new Order(orderItems));
 
         assertEquals(orderItems, receipt.getItems());
-        assertEquals(BigDecimal.valueOf(1.5d).setScale(2, BigDecimal.ROUND_HALF_UP), receipt.getTotal());
+        assertEquals(bigDecimalScaleTwo(1.5d), receipt.getTotal());
     }
 
     @Test
@@ -66,7 +68,30 @@ public class ShoppingCartTest {
         Receipt receipt = cart.checkout(new Order(orderItems));
 
         assertEquals(orderItems, receipt.getItems());
-        assertEquals(BigDecimal.valueOf(3.6d).setScale(2, BigDecimal.ROUND_HALF_UP), receipt.getTotal());
+        assertEquals(bigDecimalScaleTwo(3.6d), receipt.getTotal());
     }
+
+    @Test
+    public void orderWithOneKgReturnsPricePerKg() {
+
+        OrderItem orangesItem = oneKgOfOranges();
+        List<OrderItem> orderItems = Collections.singletonList(orangesItem);
+        Receipt receipt = cart.checkout(new Order(orderItems));
+
+        assertEquals(orderItems, receipt.getItems());
+        assertEquals(orangesItem.getProduct().getPricePerUnit(), receipt.getTotal());
+    }
+
+    @Test
+    public void orderWithThreeKgsReturnsThreeTimesKfPrice() {
+
+        OrderItem orangesItem = threeKgsOfOranges();
+        List<OrderItem> orderItems = Collections.singletonList(orangesItem);
+        Receipt receipt = cart.checkout(new Order(orderItems));
+
+        assertEquals(orderItems, receipt.getItems());
+        assertEquals(bigDecimalScaleTwo(5.97d), receipt.getTotal());
+    }
+
 
 }

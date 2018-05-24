@@ -26,4 +26,16 @@ public final class OrderItems {
     public static OrderItem threeCansOfCoke() {
         return new OrderItem(coke(), BigDecimal.valueOf(3d));
     }
+
+    public static OrderItem oneKgOfOranges() {
+        return new OrderItem(oranges(), BigDecimal.ONE);
+    }
+
+    public static OrderItem twoHundredGramsOfOranges() {
+        return new OrderItem(oranges(), BigDecimal.valueOf(0.2d));
+    }
+
+    public static OrderItem threeKgsOfOranges() {
+        return new OrderItem(oranges(), BigDecimal.valueOf(3d));
+    }
 }

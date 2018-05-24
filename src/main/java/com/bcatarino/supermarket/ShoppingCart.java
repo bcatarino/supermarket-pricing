@@ -18,6 +18,6 @@ public class ShoppingCart {
     }
 
     private BigDecimal getTotalForOrderItem(OrderItem item) {
-        return item.getProduct().getPricePerUnit().multiply(item.getQuantity());
+        return item.getProduct().getPricePerUnit().multiply(item.getQuantity()).setScale(2, BigDecimal.ROUND_HALF_UP);
     }
 }
