@@ -11,7 +11,11 @@ public enum DiscountType {
 
             BigDecimal paidOnDiscount = quantity.divideToIntegralValue(three).multiply(two);
             BigDecimal nonEligible = quantity.remainder(three);
-            return paidOnDiscount.add(nonEligible).multiply(unitPrice).setScale(2, BigDecimal.ROUND_HALF_UP);
+
+            return quantity.multiply(unitPrice).subtract(paidOnDiscount.add(nonEligible).multiply(unitPrice))
+                    .setScale(2, BigDecimal.ROUND_HALF_UP);
+
+//            return paidOnDiscount.add(nonEligible).multiply(unitPrice).setScale(2, BigDecimal.ROUND_HALF_UP);
         }
     }, TWO_FOR_1_POUND {
         @Override
@@ -20,7 +24,12 @@ public enum DiscountType {
 
             BigDecimal paidOnDiscount = quantity.divideToIntegralValue(two);
             BigDecimal nonEligible = quantity.subtract(paidOnDiscount.multiply(two));
-            return paidOnDiscount.multiply(BigDecimal.ONE).add(nonEligible.multiply(unitPrice)).setScale(2, BigDecimal.ROUND_HALF_UP);
+
+            BigDecimal toPay = paidOnDiscount.add(nonEligible.multiply(unitPrice));
+
+            return quantity.multiply(unitPrice).subtract(toPay).setScale(2, BigDecimal.ROUND_HALF_UP);
+
+//            return paidOnDiscount.multiply(BigDecimal.ONE).add(nonEligible.multiply(unitPrice)).setScale(2, BigDecimal.ROUND_HALF_UP);
         }
     };
 

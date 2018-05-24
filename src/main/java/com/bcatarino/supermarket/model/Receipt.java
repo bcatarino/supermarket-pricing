@@ -17,6 +17,9 @@ public class Receipt {
 
     private List<Saving> savings;
 
+    @Getter
+    private BigDecimal totalSaving;
+
     public Receipt(List<OrderItem> items, BigDecimal subtotal) {
         this(items, subtotal, Collections.emptyList());
     }
@@ -33,7 +36,10 @@ public class Receipt {
 
         this.items = items;
         this.subtotal = subtotal;
-        this.savings = savings == null ? Collections.emptyList() : savings;
+        this.savings = savings != null ? savings : Collections.emptyList();
+
+        this.totalSaving = this.savings.stream().map(Saving::getSavingValue).reduce(BigDecimal.ZERO, BigDecimal::add)
+                .setScale(2, BigDecimal.ROUND_HALF_UP);
     }
 
     public List<OrderItem> getItems() {
@@ -42,5 +48,9 @@ public class Receipt {
 
     public List<Saving> getSavings() {
         return Collections.unmodifiableList(savings);
+    }
+
+    public BigDecimal getTotal() {
+        return subtotal.subtract(totalSaving).setScale(2, BigDecimal.ROUND_HALF_UP);
     }
 }

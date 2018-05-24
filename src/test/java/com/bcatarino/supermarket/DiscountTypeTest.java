@@ -32,21 +32,21 @@ public class DiscountTypeTest {
     }
 
     @Test
-    public void shouldReturnRegularPriceIfOnlyTwoInThreeForTwo() {
+    public void shouldReturnNoDiscountIfOnlyTwoInThreeForTwo() {
         BigDecimal finalPrice = DiscountType.THREE_FOR_TWO.calculateDiscount(BigDecimal.valueOf(2), BigDecimal.TEN);
-        assertEquals(bigDecimalScaleTwo(20), finalPrice);
+        assertEquals(bigDecimalScaleTwo(0), finalPrice);
     }
 
     @Test
-    public void shouldReturnPriceOfTwoForThreeItems() {
+    public void shouldReturnDiscountIfThreeItems() {
         BigDecimal finalPrice = DiscountType.THREE_FOR_TWO.calculateDiscount(BigDecimal.valueOf(3), BigDecimal.TEN);
-        assertEquals(bigDecimalScaleTwo(20), finalPrice);
+        assertEquals(bigDecimalScaleTwo(10), finalPrice);
     }
 
     @Test
-    public void shouldReturnPriceOfThreeForFourItems() {
+    public void shouldReturnDiscountForOneIfFourItems() {
         BigDecimal finalPrice = DiscountType.THREE_FOR_TWO.calculateDiscount(BigDecimal.valueOf(4), BigDecimal.TEN);
-        assertEquals(bigDecimalScaleTwo(30), finalPrice);
+        assertEquals(bigDecimalScaleTwo(10), finalPrice);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -71,26 +71,26 @@ public class DiscountTypeTest {
     }
 
     @Test
-    public void shouldReturnRegularPriceIfOnlyOneUnit() {
+    public void shouldReturnNoDiscountIfOnlyOneUnit() {
         BigDecimal finalPrice = DiscountType.TWO_FOR_1_POUND.calculateDiscount(BigDecimal.valueOf(1), BigDecimal.valueOf(0.6));
-        assertEquals(bigDecimalScaleTwo(0.6), finalPrice);
+        assertEquals(bigDecimalScaleTwo(0), finalPrice);
     }
 
     @Test
-    public void shouldReturnOneIfTwoItems() {
+    public void shouldReturnDiscountForTwoItems() {
         BigDecimal finalPrice = DiscountType.TWO_FOR_1_POUND.calculateDiscount(BigDecimal.valueOf(2), BigDecimal.valueOf(0.6));
-        assertEquals(bigDecimalScaleTwo(1), finalPrice);
+        assertEquals(bigDecimalScaleTwo(0.2), finalPrice);
     }
 
     @Test
-    public void shouldReturnOnePlusPriceOfOneIfThreeItems() {
+    public void shouldReturnDiscountIfThreeItemsInTwoForOne() {
         BigDecimal finalPrice = DiscountType.TWO_FOR_1_POUND.calculateDiscount(BigDecimal.valueOf(3), BigDecimal.valueOf(0.6));
-        assertEquals(bigDecimalScaleTwo(1.6), finalPrice);
+        assertEquals(bigDecimalScaleTwo(0.2), finalPrice);
     }
 
     @Test
-    public void shouldReturnPriceForSevenItems() {
+    public void shouldReturnDiscountTimesThreeIfSevenItems() {
         BigDecimal finalPrice = DiscountType.TWO_FOR_1_POUND.calculateDiscount(BigDecimal.valueOf(7), BigDecimal.valueOf(0.6));
-        assertEquals(bigDecimalScaleTwo(3.6), finalPrice);
+        assertEquals(bigDecimalScaleTwo(0.6), finalPrice);
     }
 }
