@@ -5,14 +5,15 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 @AllArgsConstructor
 @Getter
-@EqualsAndHashCode
-public class Receipt {
+@EqualsAndHashCode(of = "name")
+public class Product {
 
-    private List<OrderItem> items;
+    private String name;
 
-    private BigDecimal total;
+    private BigDecimal pricePerUnit;
+
+    private Unit unit;
 }
