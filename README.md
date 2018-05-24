@@ -34,3 +34,17 @@ Total to Pay         2.40
 ## Assumptions
 
 * Minimum price for one item is 0.01.
+* Based on the problem, I'm guessing there's no need to provide an interface to run the application and that it will be executed only through the tests.
+
+## Installation
+
+Simply clone this repo in your local machine.
+
+## Run tests
+
+From the root folder, run:
+
+`mvn test`
+
+to execute all the test cases.
+

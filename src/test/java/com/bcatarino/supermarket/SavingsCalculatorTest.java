@@ -52,7 +52,7 @@ public class SavingsCalculatorTest {
     @Test
     public void shouldReturnSavingForMixedOrderWithDiscount() {
         Saving beansSaving = new Saving("beans", DiscountType.THREE_FOR_TWO, bigDecimalScaleTwo(1));
-        Saving cokeSaving = new Saving("coke", DiscountType.TWO_FOR_1_POUND, bigDecimalScaleTwo(0.2));
+        Saving cokeSaving = new Saving("coke", DiscountType.TWO_FOR_1_POUND, bigDecimalScaleTwo(0.4));
         List<Saving> savings = calculator.calculateSavings(Arrays.asList(threeCansOfBeansWithDiscounts(),
                 oneCanOfBeansWithDiscounts(), threeCansOfCokeWithDiscounts(), oneCanOfBeansWithDiscounts(),
                 oneCanOfBeansWithDiscounts()));

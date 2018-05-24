@@ -23,12 +23,17 @@ public class SavingsCalculator {
     }
 
     private List<ProductCount> calculateQuantityPerProduct(List<OrderItem> items) {
-        return items.stream().map(i -> new ProductCount(i.getProduct(), i.getQuantity())).collect(Collectors.toList());
+        Map<Product, List<OrderItem>> orderItemsByProduct = items.stream().collect(Collectors.groupingBy(OrderItem::getProduct));
+        return orderItemsByProduct.entrySet().stream().map(this::toProductCount).collect(Collectors.toList());
+    }
+
+    private ProductCount toProductCount(Map.Entry<Product, List<OrderItem>> entry) {
+        return new ProductCount(entry.getKey(),
+                entry.getValue().stream().map(OrderItem::getQuantity).reduce(BigDecimal.ZERO, BigDecimal::add));
     }
 
     private Map<Product, BigDecimal> calculateDiscountPerProduct(List<ProductCount> quantityPerProduct) {
-        return quantityPerProduct.stream()
-                .filter(i -> i.getProduct().getDiscount().isPresent())
+        return quantityPerProduct.stream().filter(i -> i.getProduct().getDiscount().isPresent())
                 .collect(Collectors.toMap(ProductCount::getProduct, this::calculateDiscount));
     }
 
